@@ -12,6 +12,19 @@ class InsightData extends AbstractResource
 {
     public const RESOURCE_BASE = '/insightData/v3';
 
+
+    /**
+     * @return string
+     * @throws \Dotdigital\Exception\ResponseValidationException
+     * @throws \Http\Client\Exception
+     */
+    public function listInsightDataCollections(): string
+    {
+        return $this->get(
+            sprintf('%s', self::RESOURCE_BASE)
+        );
+    }
+
     /**
      * @param InsightDataModel $insightData
      * @return string
@@ -49,6 +62,42 @@ class InsightData extends AbstractResource
                 $recordId
             ),
             $insightData
+        );
+    }
+
+    public function createOrUpdateContactCollectionRecord(
+        string $collectionName,
+        string $identifier,
+        string $value,
+        string $recordId,
+        array $insightData
+    ): string {
+        return $this->put(
+            sprintf(
+                '%s/%s/%s/%s/',
+                self::RESOURCE_BASE,
+                'contacts',
+                $identifier,
+                $value,
+                $collectionName,
+                $recordId,
+            ),
+            $insightData
+        );
+    }
+
+    public function createCollection(
+        InsightDataModel $insightDataCollection
+    ): string {
+        return $this->post(
+            sprintf(
+                '%s/%s/%s/?collectionScope=%s/&collectionType=%s/',
+                self::RESOURCE_BASE,
+                'collections',
+                $insightDataCollection->collectionName,
+                $insightDataCollection->collectionScope,
+                $insightDataCollection->collectionType,
+            ),
         );
     }
 }
