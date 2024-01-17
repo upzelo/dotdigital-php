@@ -35,7 +35,6 @@ class DataFields extends AbstractResource
                 "name" => $name,
                 "type" => $type,
                 "visibility" => 'Private',
-                "defaultValue" => ''
             ]
         );
 

@@ -21,7 +21,7 @@ class InsightData extends AbstractResource
     public function listInsightDataCollections(): string
     {
         return $this->get(
-            sprintf('%s', self::RESOURCE_BASE)
+            sprintf('%s/%s', self::RESOURCE_BASE, 'collections')
         );
     }
 
@@ -74,7 +74,7 @@ class InsightData extends AbstractResource
     ): string {
         return $this->put(
             sprintf(
-                '%s/%s/%s/%s/',
+                '%s/%s/%s/%s/%s/%s',
                 self::RESOURCE_BASE,
                 'contacts',
                 $identifier,
@@ -87,16 +87,16 @@ class InsightData extends AbstractResource
     }
 
     public function createCollection(
-        InsightDataModel $insightDataCollection
+        array $insightDataCollection
     ): string {
         return $this->post(
             sprintf(
-                '%s/%s/%s/?collectionScope=%s/&collectionType=%s/',
+                '%s/%s/%s?collectionScope=%s&collectionType=%s',
                 self::RESOURCE_BASE,
                 'collections',
-                $insightDataCollection->collectionName,
-                $insightDataCollection->collectionScope,
-                $insightDataCollection->collectionType,
+                $insightDataCollection['collectionName'],
+                $insightDataCollection['collectionScope'],
+                $insightDataCollection['collectionType'],
             ),
         );
     }
