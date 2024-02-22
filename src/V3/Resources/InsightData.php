@@ -100,4 +100,17 @@ class InsightData extends AbstractResource
             ),
         );
     }
+
+    public function deleteCollection(
+        string $collectionName
+    ): string {
+        return $this->delete(
+            sprintf(
+                '%s/%s/%s',
+                self::RESOURCE_BASE,
+                'collections',
+                $collectionName,
+            ),
+        );
+    }
 }

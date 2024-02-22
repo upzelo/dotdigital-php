@@ -100,6 +100,15 @@ abstract class AbstractResource
         return $this->client->mediateResponse($response);
     }
 
+    protected function delete(string $path, array $headers = []) {
+        $response = $this->client->getHttpClient()->delete(
+            $path,
+            $headers,
+        );
+
+        return $this->client->mediateResponse($response);
+    }
+
     /**
      * Resolve data fields.
      *
