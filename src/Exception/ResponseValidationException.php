@@ -10,6 +10,7 @@ class ResponseValidationException extends \ErrorException implements ExceptionIn
      * @var array
      */
     private $details;
+    private $headers;
 
     /**
      * @param ResponseInterface $errorResponse
@@ -18,11 +19,13 @@ class ResponseValidationException extends \ErrorException implements ExceptionIn
     public static function fromErrorResponse(
         ResponseInterface $errorResponse
     ): ResponseValidationException {
+        $headers = $errorResponse->getHeaders();
         $content = $errorResponse->getBody()->getContents();
         $status = $errorResponse->getStatusCode();
         $exception = new self($content, $status);
         $exception->setDetails($content);
         $exception->setMessage($content);
+        $exception->setHeaders($headers);
         return $exception;
     }
 
@@ -32,6 +35,11 @@ class ResponseValidationException extends \ErrorException implements ExceptionIn
     public function getDetails(): ?array
     {
         return $this->details;
+    }
+
+    public function getHeaders(): ?array
+    {
+        return $this->headers;
     }
 
     /**
@@ -56,6 +64,11 @@ class ResponseValidationException extends \ErrorException implements ExceptionIn
             $decoded['errorCode'],
             $decoded['description']
         );
+    }
+
+    public function setHeaders(string|array $headers): void
+    {
+        $this->headers = $headers;
     }
 
     /**
